@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { SelectQueryBuilder } from 'typeorm';
+import { EntityManager, SelectQueryBuilder } from 'typeorm';
 
 import { OwnerOperatorsDTO } from '../dto/owner-operators.dto';
 import { OwnerYearDimRepository } from './owner-year-dim.repository';
@@ -22,6 +22,7 @@ describe('OwnerYearDimRepository', () => {
     const module = await Test.createTestingModule({
       providers: [
         OwnerYearDimRepository,
+        EntityManager,
         { provide: SelectQueryBuilder, useFactory: mockQueryBuilder },
       ],
     }).compile();
