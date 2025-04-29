@@ -3,8 +3,13 @@ import { AccountModule } from './account/account.module';
 import { AllowanceTransactionsModule } from './allowance-transactions/allowance-transactions.module';
 import { AllowanceComplianceModule } from './allowance-compliance/allowance-compliance.module';
 import { EmissionsComplianceModule } from './emissions-compliance/emissions-compliance.module';
+import { HealthModule } from '@us-epa-camd/easey-common/health/health.module';
 
 const routes = [
+  {
+    path: '/health',
+    module: HealthModule,
+  },
   {
     path: '/allowance-holdings',
     module: AllowanceHoldingsModule,
