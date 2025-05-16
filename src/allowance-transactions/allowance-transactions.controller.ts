@@ -28,6 +28,8 @@ import { ArrayResponse } from '@us-epa-camd/easey-common/interfaces/common.inter
 @ApiSecurity('APIKey')
 @ApiTags('Allowance Transactions')
 @ApiExtraModels(AllowanceTransactionsDTO)
+@ApiExtraModels(ApplicableAllowanceTransactionsAttributesDTO)
+@ApiExtraModels(OwnerOperatorsDTO)
 export class AllowanceTransactionsController {
   constructor(
     private readonly allowanceTransactionsService: AllowanceTransactionsService,
@@ -39,7 +41,13 @@ export class AllowanceTransactionsController {
     content: {
       'application/json': {
         schema: {
-          $ref: getSchemaPath(AllowanceTransactionsDTO),
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: { $ref: getSchemaPath(AllowanceTransactionsDTO) },
+            },
+          },
         },
       },
       'text/csv': {
@@ -87,6 +95,19 @@ export class AllowanceTransactionsController {
   @ApiExtraModels(ApplicableAllowanceTransactionsAttributesDTO)
   @ApiOkResponse({
     description: 'Retrieved All Applicable Allowance Transactions Attributes',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(ApplicableAllowanceTransactionsAttributesDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
@@ -107,6 +128,19 @@ export class AllowanceTransactionsController {
   @Get('owner-operators')
   @ApiOkResponse({
     description: 'Retrieved All Valid Owner Operators',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(OwnerOperatorsDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
