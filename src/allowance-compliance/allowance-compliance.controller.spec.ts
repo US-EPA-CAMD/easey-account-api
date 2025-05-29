@@ -14,6 +14,7 @@ import { OwnerYearDimRepository } from './owner-year-dim.repository';
 import { OwnerOperatorsMap } from '../maps/owner-operators.map';
 import { ApplicableAllowanceComplianceAttributesMap } from '../maps/applicable-allowance-compliance.map';
 import { ApplicableAllowanceComplianceAttributesDTO } from '../dto/applicable-allowance-compliance-attributes.dto';
+import { EntityManager } from 'typeorm';
 
 const mockRequest = (url: string) => {
   return {
@@ -40,6 +41,7 @@ describe('-- Allowance Compliance Controller --', () => {
         OwnerYearDimRepository,
         OwnerOperatorsMap,
         ApplicableAllowanceComplianceAttributesMap,
+        EntityManager,
       ],
     }).compile();
 
