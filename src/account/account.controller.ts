@@ -27,12 +27,28 @@ import { ArrayResponse } from '@us-epa-camd/easey-common/interfaces/common.inter
 @ApiSecurity('APIKey')
 @ApiTags('Accounts')
 @ApiExtraModels(AccountAttributesDTO)
+@ApiExtraModels(AccountDTO)
+@ApiExtraModels(ApplicableAccountAttributesDTO)
+@ApiExtraModels(OwnerOperatorsDTO)
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Get()
   @ApiOkResponse({
     description: 'Retrieved All Valid Accounts',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(AccountDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
@@ -51,7 +67,13 @@ export class AccountController {
     content: {
       'application/json': {
         schema: {
-          $ref: getSchemaPath(AccountAttributesDTO),
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: { $ref: getSchemaPath(AccountAttributesDTO) },
+            },
+          },
         },
       },
       'text/csv': {
@@ -87,6 +109,19 @@ export class AccountController {
   @ApiExtraModels(ApplicableAccountAttributesDTO)
   @ApiOkResponse({
     description: 'Retrieved All Applicable Account Attributes',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(ApplicableAccountAttributesDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
@@ -103,6 +138,19 @@ export class AccountController {
   @ApiExtraModels(OwnerOperatorsDTO)
   @ApiOkResponse({
     description: 'Retrieved All Valid Owner Operators',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(OwnerOperatorsDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()

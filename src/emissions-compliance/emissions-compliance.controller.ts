@@ -27,6 +27,8 @@ import { ArrayResponse } from '@us-epa-camd/easey-common/interfaces/common.inter
 @ApiSecurity('APIKey')
 @ApiTags('Emissions Compliance')
 @ApiExtraModels(EmissionsComplianceDTO)
+@ApiExtraModels(ApplicableComplianceAttributesDTO)
+@ApiExtraModels(OwnerOperatorsDTO)
 export class EmissionsComplianceController {
   constructor(
     private readonly allowanceComplianceService: AllowanceComplianceService,
@@ -39,7 +41,13 @@ export class EmissionsComplianceController {
     content: {
       'application/json': {
         schema: {
-          $ref: getSchemaPath(EmissionsComplianceDTO),
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: { $ref: getSchemaPath(EmissionsComplianceDTO) },
+            },
+          },
         },
       },
       'text/csv': {
@@ -75,6 +83,19 @@ export class EmissionsComplianceController {
   @ApiExtraModels(ApplicableComplianceAttributesDTO)
   @ApiOkResponse({
     description: 'Retrieved All Applicable Emissions Compliance Attributes',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(ApplicableComplianceAttributesDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
@@ -90,6 +111,19 @@ export class EmissionsComplianceController {
   @Get('owner-operators')
   @ApiOkResponse({
     description: 'Retrieved All Valid Owner Operators',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(OwnerOperatorsDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
