@@ -19,6 +19,7 @@ import { AllowanceHoldingsModule } from './allowance-holdings/allowance-holdings
 import { AllowanceTransactionsModule } from './allowance-transactions/allowance-transactions.module';
 import { AllowanceComplianceModule } from './allowance-compliance/allowance-compliance.module';
 import { EmissionsComplianceModule } from './emissions-compliance/emissions-compliance.module';
+import { HealthModule } from '@us-epa-camd/easey-common/health/health.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { EmissionsComplianceModule } from './emissions-compliance/emissions-comp
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
+    HealthModule,
     LoggerModule,
     CorsOptionsModule,
     AllowanceHoldingsModule,
@@ -43,6 +45,14 @@ import { EmissionsComplianceModule } from './emissions-compliance/emissions-comp
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(MaintenanceMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL })
+    consumer
+      .apply(MaintenanceMiddleware)
+      .exclude(
+        {
+          path: '/health',
+          method: RequestMethod.GET,
+        },
+      )
+      .forRoutes({ path: '*', method: RequestMethod.ALL })
   }
 }
