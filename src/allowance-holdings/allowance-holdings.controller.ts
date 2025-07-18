@@ -28,6 +28,8 @@ import { ArrayResponse } from '@us-epa-camd/easey-common/interfaces/common.inter
 @ApiSecurity('APIKey')
 @ApiTags('Allowance Holdings')
 @ApiExtraModels(AllowanceHoldingsDTO)
+@ApiExtraModels(ApplicableAllowanceHoldingsAttributesDTO)
+@ApiExtraModels(OwnerOperatorsDTO)
 export class AllowanceHoldingsController {
   constructor(
     private readonly allowanceService: AllowanceHoldingsService,
@@ -40,7 +42,13 @@ export class AllowanceHoldingsController {
     content: {
       'application/json': {
         schema: {
-          $ref: getSchemaPath(AllowanceHoldingsDTO),
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: { $ref: getSchemaPath(AllowanceHoldingsDTO) },
+            },
+          },
         },
       },
       'text/csv': {
@@ -82,6 +90,19 @@ export class AllowanceHoldingsController {
   @ApiExtraModels(ApplicableAllowanceHoldingsAttributesDTO)
   @ApiOkResponse({
     description: 'Retrieved All Applicable Allowance Holdings Attributes',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(ApplicableAllowanceHoldingsAttributesDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
@@ -97,6 +118,19 @@ export class AllowanceHoldingsController {
   @Get('owner-operators')
   @ApiOkResponse({
     description: 'Retrieved All Valid Owner Operators',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(OwnerOperatorsDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
