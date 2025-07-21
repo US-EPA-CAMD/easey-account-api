@@ -27,6 +27,8 @@ import { ArrayResponse } from '@us-epa-camd/easey-common/interfaces/common.inter
 @ApiSecurity('APIKey')
 @ApiTags('Allowance Compliance')
 @ApiExtraModels(AllowanceComplianceDTO)
+@ApiExtraModels(ApplicableAllowanceComplianceAttributesDTO)
+@ApiExtraModels(OwnerOperatorsDTO)
 export class AllowanceComplianceController {
   constructor(
     private readonly allowanceComplianceService: AllowanceComplianceService,
@@ -38,7 +40,13 @@ export class AllowanceComplianceController {
     content: {
       'application/json': {
         schema: {
-          $ref: getSchemaPath(AllowanceComplianceDTO),
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: { $ref: getSchemaPath(AllowanceComplianceDTO) },
+            },
+          },
         },
       },
       'text/csv': {
@@ -80,6 +88,19 @@ export class AllowanceComplianceController {
   @ApiExtraModels(ApplicableAllowanceComplianceAttributesDTO)
   @ApiOkResponse({
     description: 'Retrieved All Applicable Allowance Compliance Attributes',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(ApplicableAllowanceComplianceAttributesDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
@@ -95,6 +116,19 @@ export class AllowanceComplianceController {
   @Get('owner-operators')
   @ApiOkResponse({
     description: 'Retrieved All Valid Owner Operators',
+    content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(OwnerOperatorsDTO) },
+              },
+            },
+          },
+        },
+      }
   })
   @BadRequestResponse()
   @NotFoundResponse()
