@@ -17,12 +17,14 @@ export class UnitFact extends BaseEntity {
   @PrimaryColumn({
     name: 'unit_id',
     transformer: new NumericColumnTransformer(),
+    type: 'numeric',
   })
   id: number;
 
   @PrimaryColumn({
     name: 'op_year',
     transformer: new NumericColumnTransformer(),
+    type: 'numeric',
   })
   year: number;
 
@@ -39,6 +41,7 @@ export class UnitFact extends BaseEntity {
   @Column({
     name: 'orispl_code',
     transformer: new NumericColumnTransformer(),
+    type: 'numeric',
   })
   facilityId: number;
 
