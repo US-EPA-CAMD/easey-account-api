@@ -10,14 +10,14 @@ export class EmissionsComplianceMap extends BaseMap<
   EmissionsComplianceDTO
 > {
   public async one(entity: UnitComplianceDim): Promise<any> {
-    const splitOwnWithPipe = entity.ownerDisplayFact?.owner?.split('|');
-    const splitOprWithPipe = entity.ownerDisplayFact?.operator?.split('|');
+    const splitOwnWithPipe:string[] = entity.ownerDisplayFact?.owner?.split('|') ?? [];
+    const splitOprWithPipe:string[] = entity.ownerDisplayFact?.operator?.split('|') ?? [];
 
-    const uniqueOwn = [...new Set(splitOwnWithPipe)].join('|');
-    const uniqueOpr = [...new Set(splitOprWithPipe)].join('|');
+    const uniqueOwn = [...new Set(splitOwnWithPipe.map(String))].join('|');
+    const uniqueOpr = [...new Set(splitOprWithPipe.map(String))].join('|');
 
     const uniqueOwnOprList = [uniqueOwn, uniqueOpr];
-    const ownerOperator = uniqueOwnOprList.filter(e => e).join('|');
+    const ownerOperator = uniqueOwnOprList.filter(Boolean).join('|');
 
     return {
       year: entity.year,
