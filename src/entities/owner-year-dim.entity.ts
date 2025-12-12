@@ -8,6 +8,7 @@ export class OwnerYearDim extends BaseEntity {
   @PrimaryColumn({
     name: 'own_yr_id',
     transformer: new NumericColumnTransformer(),
+    type: 'numeric',
   })
   ownYearId: number;
 
@@ -19,6 +20,7 @@ export class OwnerYearDim extends BaseEntity {
   @PrimaryColumn({
     name: 'op_year',
     transformer: new NumericColumnTransformer(),
+    type: 'numeric',
   })
   year: number;
 
@@ -30,6 +32,7 @@ export class OwnerYearDim extends BaseEntity {
   @Column({
     name: 'own_id',
     transformer: new NumericColumnTransformer(),
+    type: 'numeric',
   })
   ownId: number;
 
@@ -38,9 +41,6 @@ export class OwnerYearDim extends BaseEntity {
   })
   ownerOperator: string;
 
-  @OneToMany(
-    () => UnitFact,
-    uf => uf.ownerYearDim,
-  )
+  @OneToMany(() => UnitFact, (uf) => uf.ownerYearDim)
   unitFact: UnitFact[];
 }
