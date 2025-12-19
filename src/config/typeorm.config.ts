@@ -62,8 +62,10 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       maxQueryExecutionTime: this.configService.get<number>('app.maxQueryExecutionTime'),
     };
 
+    const replicaAccessEnabled = this.configService.get<boolean>('app.enableReplicaDbAccess');
+
     // If replica host is configured and different from main host, enable replication
-    if (replicaHost && replicaHost !== mainHost) {
+    if (replicaAccessEnabled && replicaHost && replicaHost !== mainHost) {
       return {
         ...baseConfig,
         replication: {
