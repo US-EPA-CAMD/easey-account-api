@@ -12,6 +12,16 @@
 ## Description
 Manages account based allowance & compliance data for the EPA CAMD Business Systems. The account API endpoints return account attributes, allowance transactions, allowance holdaings, allowance based compliance, & account based compliance data.
 
+## Database Configuration
+
+This service is configured to use database replication with TypeORM’s replication settings.
+By default, the replication.defaultMode is set to `slave`, meaning all read operations (e.g., SELECT) are routed to the read replica whenever possible to optimize performance and reduce load on the primary database.
+
+TypeORM automatically directs write operations (INSERT, UPDATE, DELETE, CREATE, etc.) to the primary database, so no additional configuration is required for those actions.
+
+However, developers must be aware that replication lag can cause stale reads immediately after a write operation.
+If a SELECT query must rely on data that was just written or updated, that query should be explicitly executed against the primary database connection to ensure data consistency.
+
 ## Getting Started
 Follow these [instructions](https://github.com/US-EPA-CAMD/devops/blob/master/GETTING-STARTED.md) to get the project up and running correctly.
 

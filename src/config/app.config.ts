@@ -65,6 +65,9 @@ export default registerAs('app', () => ({
   enableDebug: getConfigValueBoolean(
     'EASEY_ACCOUNT_API_ENABLE_DEBUG',
   ),
+  enableReplicaDbAccess: getConfigValueBoolean(
+    'EASEY_ACCOUNT_API_ENABLE_REPLICA_DB_ACCESS',
+  ),
   transactionDateYearsLimit: TRANSACTION_DATE_LIMIT_YEARS,
   perPageLimit: PAGINATION_MAX_PER_PAGE,
   apiHost: apiHost,
